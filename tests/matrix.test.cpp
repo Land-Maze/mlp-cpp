@@ -51,4 +51,25 @@ TEST_CASE("Matrix Multiplication Correctness", "[matrix][multiplication]") {
         REQUIRE(C(1, 0) == 43.0f);
         REQUIRE(C(1, 1) == 50.0f);
     }
+
+    SECTION("Transposed multiplication produces expected values") {
+        LML::Matrix A(2, 2);
+        LML::Matrix B(2, 2);
+
+        A(0, 0) = 1;
+        A(0, 1) = 2;
+        A(1, 0) = 3;
+        A(1, 1) = 4;
+
+        B(0, 0) = 5;
+        B(0, 1) = 6;
+        B(1, 0) = 7;
+        B(1, 1) = 8;
+
+        LML::Matrix C = LML::Matrix::mul_transposed_A(A, B);
+        REQUIRE(C(0, 0) == 26.0f);
+        REQUIRE(C(0, 1) == 30.0f);
+        REQUIRE(C(1, 0) == 38.0f);
+        REQUIRE(C(1, 1) == 44.0f);
+    }
 }
