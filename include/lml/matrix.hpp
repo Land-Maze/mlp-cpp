@@ -1,5 +1,4 @@
 #include <vector>
-#include <cassert>
 
 namespace LML{
     struct Matrix{
@@ -17,38 +16,8 @@ namespace LML{
             return data[row * cols + col];
         }
 
-        static Matrix mul(const Matrix& A, const Matrix& B){
-            assert(A.cols == B.rows);
+        static Matrix mul(const Matrix& A, const Matrix& B);
 
-            Matrix C(A.rows, B.cols);
-
-            // FIXME: Optimize the naïve aproach
-            for(size_t i = 0; i < C.rows; i++){
-                for(size_t j = 0; j < C.cols; j++){
-                    for(size_t m = 0; m < A.cols; m++){
-                        C(i,j) += A(i, m) * B(m, j);
-                    }
-                }
-            }
-
-            return C;
-        }
-
-        static Matrix mul_transposed_A(const Matrix& A, const Matrix& B){
-            assert(A.cols == B.rows);
-
-            Matrix C(A.rows, B.cols);
-
-            // FIXME: Optimize the naïve aproach
-            for(size_t i = 0; i < C.rows; i++){
-                for(size_t j = 0; j < C.cols; j++){
-                    for(size_t m = 0; m < A.cols; m++){
-                        C(i,j) += A(m, i) * B(m, j);
-                    }
-                }
-            }
-
-            return C;
-        }
+        static Matrix mul_transposed_A(const Matrix& A, const Matrix& B);
     };
 }
