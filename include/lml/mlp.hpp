@@ -7,11 +7,7 @@ namespace LML
 {
 
     struct MLPCreateInfo{
-        size_t input_n;
-
         std::vector<std::pair<size_t, size_t>> layer_sizes;
-
-        size_t output_n;
 
         ActivationType activation_function;
 

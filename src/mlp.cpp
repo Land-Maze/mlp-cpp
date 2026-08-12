@@ -26,18 +26,18 @@ Matrix MLP::forward(Matrix input){
 }
 
 Matrix MLP::mse(Matrix target){
-    assert_dim_equal(m_layers.back().a, target);
+    assert_dim_equal(m_layers.back().a_out, target);
 
     Matrix coef(target.rows, target.cols, 0.5f);
-    return Matrix::haamard_product(coef, (Matrix::sub(m_layers.back().a, target)));
+    return Matrix::haamard_product(coef, (Matrix::sub(m_layers.back().a_out, target)));
 }
 
 void MLP::backward(Matrix target){
-    assert_dim_equal(m_layers.back().a, target);
+    assert_dim_equal(m_layers.back().a_out, target);
 
-    Matrix dX = Matrix::sub(m_layers.back().a, target);
-    for(size_t i = this->m_metadata.layer_sizes.size() - 2; 0 <= i; i--){
-        dX = this->m_layers[i].backward_pass(dX);
+    Matrix dX = Matrix::sub(m_layers.back().a_out, target);
+    for (size_t i = m_layers.size(); i-- > 0; ) {
+        dX = m_layers[i].backward_pass(dX);
     }
 }
 

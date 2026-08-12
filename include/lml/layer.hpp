@@ -9,11 +9,14 @@ namespace LML{
         Matrix b;
         ActivationType act;
 
-        Matrix a;
+        Matrix a_in;
+        Matrix a_out;
 
         Matrix dW;
         Matrix delta;
         Matrix dX;
+        
+        //activation derivative with z
         Matrix dZ;
 
         Layer(size_t n_in, size_t n_out, ActivationType act);
