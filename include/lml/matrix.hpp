@@ -27,7 +27,7 @@ namespace LML
 
         static Matrix mul_transposed_A(const Matrix &A, const Matrix &B);
 
-        static Matrix Matrix::mul_transposed_B(const Matrix &A, const Matrix &B);
+        static Matrix mul_transposed_B(const Matrix &A, const Matrix &B);
 
         static Matrix add(const Matrix &A, const Matrix &B);
 
