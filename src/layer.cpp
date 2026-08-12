@@ -11,12 +11,15 @@ Layer::Layer(size_t n_in, size_t n_out, ActivationType method)
     Initializer::fill_zeros(this->b);
 }
 
-const Matrix& Layer::forward_pass(const Matrix &a)
+const Matrix& Layer::forward_pass(const Matrix &a_in)
 {
-    assert_dim(W, a);
-    z = Matrix::mul(this->W, a);
+    assert_dim(W, a_in);
+    z = Matrix::mul(this->W, a_in);
 
     z = Matrix::add(z, b);
+
+    Matrix a(z.rows, 1);
+    Activation::apply(z, a, this->act);
 
     this->a = a;
     return this->z;
@@ -32,5 +35,5 @@ const Matrix& Layer::backward_pass(const Matrix& d_next){
 
 void Layer::update_weights(const float learning_rate){
     Matrix coeficient(W.rows, W.cols, learning_rate);
-    this->W = Matrix::sub(W, Matrix::haamard_product(coeficient, W));
+    this->W = Matrix::sub(W, Matrix::haamard_product(coeficient, dW));
 }
