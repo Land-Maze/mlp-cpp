@@ -34,16 +34,35 @@ FetchContent_MakeAvailable(Catch2)
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
 
-add_executable(mlp-cpp-test ${TEST_SOURCES} ${SOURCES})
+# Library Target
+add_library(mlp-cpp STATIC ${SOURCES})
+
+target_include_directories(mlp-cpp
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+if(MSVC)
+    target_compile_options(mlp-cpp PRIVATE /W4)
+else()
+    target_compile_options(mlp-cpp PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+# Copy headers to build directory
+add_custom_target(copy-headers ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/include"
+        "${CMAKE_BINARY_DIR}/include"
+    COMMENT "Copying headers to build directory"
+)
+
+# Test Executable
+add_executable(mlp-cpp-test ${TEST_SOURCES})
 
 target_link_libraries(mlp-cpp-test
     PRIVATE
+        mlp-cpp
         Catch2::Catch2WithMain
-)
-
-target_include_directories(mlp-cpp-test
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 if(MSVC)
@@ -52,11 +71,12 @@ else()
     target_compile_options(mlp-cpp-test PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
-add_executable(mlp-cpp-example example/main.cpp ${SOURCES})
+# Example Executable
+add_executable(mlp-cpp-example example/main.cpp)
 
-target_include_directories(mlp-cpp-example
+target_link_libraries(mlp-cpp-example
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        mlp-cpp
 )
 
 if(MSVC)
@@ -68,3 +88,4 @@ endif()
 include(CTest)
 include(Catch)
 catch_discover_tests(mlp-cpp-test)
+
