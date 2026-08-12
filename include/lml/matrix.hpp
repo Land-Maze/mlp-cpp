@@ -1,4 +1,7 @@
+#pragma once
+
 #include <vector>
+#include <cassert>
 
 namespace LML{
     struct Matrix{
@@ -19,5 +22,9 @@ namespace LML{
         static Matrix mul(const Matrix& A, const Matrix& B);
 
         static Matrix mul_transposed_A(const Matrix& A, const Matrix& B);
+    };
+
+    inline void assert_dim_equal(const Matrix& A, const Matrix& B){
+        assert(A.rows == B.rows && A.cols == B.cols);
     };
 }
