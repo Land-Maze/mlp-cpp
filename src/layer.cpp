@@ -33,9 +33,10 @@ const Matrix& Layer::backward_pass(const Matrix& d_next){
 }
 
 void Layer::update_weights(const float learning_rate){
-    Matrix coeficient_w(dW.rows, dW.cols, learning_rate);
-    this->W = Matrix::sub(W, Matrix::haamard_product(coeficient_w, dW));
-
-    Matrix coeficient_b(delta.rows, delta.cols, learning_rate);
-    this->b = Matrix::sub(b, Matrix::haamard_product(coeficient_b, this->delta));
+    for (size_t i = 0; i < W.data.size(); ++i) {
+        W.data[i] -= learning_rate * dW.data[i];
+    }
+    for (size_t i = 0; i < b.data.size(); ++i) {
+        b.data[i] -= learning_rate * delta.data[i];
+    }
 }
