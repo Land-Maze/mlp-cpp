@@ -62,5 +62,27 @@ Matrix Matrix::mul_transposed_B(const Matrix &A, const Matrix &B){
     return C;
 }
 
+Matrix Matrix::add(const Matrix &A, const Matrix &B){
+    assert_dim_equal(A, B);
+
+    Matrix C(A.rows, A.cols);
+    for(size_t i = 0; i < A.data.size() ;i++){
+        C.data[i] = A.data[i] + B.data[i];
+    }
+
+    return C;
+}
+
+Matrix Matrix::sub(const Matrix &A, const Matrix &B){
+    assert_dim_equal(A, B);
+
+    Matrix C(A.rows, A.cols);
+    for(size_t i = 0; i < A.data.size() ;i++){
+        C.data[i] = A.data[i] - B.data[i];
+    }
+
+    return C;
+}
+
     return C;
 }
