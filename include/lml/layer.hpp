@@ -12,7 +12,7 @@ struct DenseLayer {
 	Matrix a_in;
 	Matrix a_out;
 
-	Matrix dW;
+	Matrix gradient;
 	Matrix delta;
 	Matrix dX;
 
