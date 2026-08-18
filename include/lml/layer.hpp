@@ -3,7 +3,7 @@
 #include <lml/activation.hpp>
 
 namespace LML{
-    struct Layer{
+    struct DenseLayer{
         Matrix z;
         Matrix W;
         Matrix b;
@@ -19,7 +19,7 @@ namespace LML{
         //activation derivative with z
         Matrix dZ;
 
-        Layer(size_t n_in, size_t n_out, ActivationType act);
+        DenseLayer(size_t n_in, size_t n_out, ActivationType act);
 
         /// @brief Calculates W*a+b
         /// @param a 

@@ -26,6 +26,6 @@ namespace LML
 
         private:
         MLPCreateInfo m_metadata;
-        std::vector<Layer> m_layers;
+        std::vector<DenseLayer> m_layers;
     };
 }

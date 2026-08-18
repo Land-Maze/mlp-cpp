@@ -7,7 +7,7 @@ MLP::MLP(MLPCreateInfo createInfo) : m_metadata(createInfo)
     for (size_t i = 0; i < m_metadata.layer_sizes.size(); i++)
     {
         m_layers.push_back(
-            Layer(
+            DenseLayer(
                 m_metadata.layer_sizes[i].first,
                 m_metadata.layer_sizes[i].second,
                 m_metadata.activation_function));
