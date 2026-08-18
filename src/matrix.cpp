@@ -1,99 +1,88 @@
-#include <lml/matrix.hpp>
 #include <cassert>
+#include <lml/matrix.hpp>
 
 using namespace LML;
 
-Matrix Matrix::mul(const Matrix &A, const Matrix &B)
-{
-    assert_dim(A, B);
+Matrix Matrix::mul(const Matrix &A, const Matrix &B) {
+	assert_dim(A, B);
 
-    Matrix C(A.rows, B.cols);
+	Matrix C(A.rows, B.cols);
 
-    // FIXME: Optimize the naïve aproach
-    for (size_t i = 0; i < C.rows; i++)
-    {
-        for (size_t j = 0; j < C.cols; j++)
-        {
-            for (size_t m = 0; m < A.cols; m++)
-            {
-                C(i, j) += A(i, m) * B(m, j);
-            }
-        }
-    }
+	// FIXME: Optimize the naïve aproach
+	for (size_t i = 0; i < C.rows; i++) {
+		for (size_t j = 0; j < C.cols; j++) {
+			for (size_t m = 0; m < A.cols; m++) {
+				C(i, j) += A(i, m) * B(m, j);
+			}
+		}
+	}
 
-    return C;
+	return C;
 }
 
-Matrix Matrix::mul_transposed_A(const Matrix &A, const Matrix &B)
-{
-    assert(A.rows == B.rows);
+Matrix Matrix::mul_transposed_A(const Matrix &A, const Matrix &B) {
+	assert(A.rows == B.rows);
 
-    Matrix C(A.cols, B.cols);
+	Matrix C(A.cols, B.cols);
 
-    // FIXME: Optimize the naïve aproach
-    for (size_t i = 0; i < C.rows; i++)
-    {
-        for (size_t j = 0; j < C.cols; j++)
-        {
-            for (size_t m = 0; m < A.rows; m++)
-            {
-                C(i, j) += A(m, i) * B(m, j);
-            }
-        }
-    }
+	// FIXME: Optimize the naïve aproach
+	for (size_t i = 0; i < C.rows; i++) {
+		for (size_t j = 0; j < C.cols; j++) {
+			for (size_t m = 0; m < A.rows; m++) {
+				C(i, j) += A(m, i) * B(m, j);
+			}
+		}
+	}
 
-    return C;
+	return C;
 }
 
-Matrix Matrix::mul_transposed_B(const Matrix &A, const Matrix &B){
-    assert(A.cols == B.cols);
+Matrix Matrix::mul_transposed_B(const Matrix &A, const Matrix &B) {
+	assert(A.cols == B.cols);
 
-    Matrix C(A.rows, B.rows);
+	Matrix C(A.rows, B.rows);
 
-    // FIXME: Optimize the naïve aproach
-    for (size_t i = 0; i < C.rows; i++)
-    {
-        for (size_t j = 0; j < C.cols; j++)
-        {
-            for (size_t m = 0; m < A.cols; m++)
-            {
-                C(i, j) += A(i, m) * B(j, m);
-            }
-        }
-    }
+	// FIXME: Optimize the naïve aproach
+	for (size_t i = 0; i < C.rows; i++) {
+		for (size_t j = 0; j < C.cols; j++) {
+			for (size_t m = 0; m < A.cols; m++) {
+				C(i, j) += A(i, m) * B(j, m);
+			}
+		}
+	}
 
-    return C;
+	return C;
 }
 
-Matrix Matrix::add(const Matrix &A, const Matrix &B){
-    assert_dim_equal(A, B);
+Matrix Matrix::add(const Matrix &A, const Matrix &B) {
+	assert_dim_equal(A, B);
 
-    Matrix C(A.rows, A.cols);
-    for(size_t i = 0; i < A.data.size() ;i++){
-        C.data[i] = A.data[i] + B.data[i];
-    }
+	Matrix C(A.rows, A.cols);
+	for (size_t i = 0; i < A.data.size(); i++) {
+		C.data[i] = A.data[i] + B.data[i];
+	}
 
-    return C;
+	return C;
 }
 
-Matrix Matrix::sub(const Matrix &A, const Matrix &B){
-    assert_dim_equal(A, B);
+Matrix Matrix::sub(const Matrix &A, const Matrix &B) {
+	assert_dim_equal(A, B);
 
-    Matrix C(A.rows, A.cols);
-    for(size_t i = 0; i < A.data.size() ;i++){
-        C.data[i] = A.data[i] - B.data[i];
-    }
+	Matrix C(A.rows, A.cols);
+	for (size_t i = 0; i < A.data.size(); i++) {
+		C.data[i] = A.data[i] - B.data[i];
+	}
 
-    return C;
+	return C;
 }
 
-Matrix Matrix::haamard_product(const Matrix &A, const Matrix &B){
-    assert_dim_equal(A, B);
+Matrix Matrix::haamard_product(const Matrix &A, const Matrix &B) {
+	assert_dim_equal(A, B);
 
-    Matrix C(A.rows, A.cols);
-    for(size_t i = 0; i < A.data.size() ;i++){
-        C.data[i] = A.data[i] * B.data[i];
-    }
+	Matrix C(A.rows, A.cols);
+	for (size_t i = 0; i < A.data.size(); i++) {
+		C.data[i] = A.data[i] * B.data[i];
+	}
 
-    return C;
+	return C;
 }
