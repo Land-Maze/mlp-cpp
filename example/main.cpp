@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <lml/mlp.hpp>
 #include <printf.h>
 
@@ -5,7 +6,7 @@ using namespace LML;
 
 int main() {
 	MLPCreateInfo createInfo{};
-	createInfo.layer_sizes = {{2, 5}, {5, 1}};
+	createInfo.layer_sizes = {{2, 4}, {4, 8}, {8, 4}, {4, 1}};
 	createInfo.activation_function = ActivationType::LeakyReLu;
 	createInfo.learning_rate = 0.5f;
 
@@ -29,18 +30,21 @@ int main() {
 
 	printf("Training phase\n");
 
-	constexpr size_t EPOCH = 5000;
+	constexpr size_t EPOCH = 100000;
 
 	for (size_t i = 0; i < EPOCH; i++) {
-		float mse = 0.0f;
+		float epoch_error = 0.0f;
 		for (auto &entry : dataset) {
 			xor_mlp.forward(entry.first);
 			xor_mlp.backward(entry.second);
 			xor_mlp.update();
-			mse = xor_mlp.mse(entry.second)(0, 0);
+			epoch_error = xor_mlp.squared_error(entry.second)(0, 0);
 		}
+
+		epoch_error = epoch_error / static_cast<float>(dataset.size());
+
 		if ((i % 1000) == 0)
-			printf("Epoch %zu, MSE %f\n", i, mse);
+			printf("Epoch %zu, squared_error %f\n", i, epoch_error);
 	}
 
 	for (auto &entry : dataset) {

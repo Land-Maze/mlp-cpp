@@ -20,11 +20,14 @@ Matrix MLP::forward(Matrix input) {
 	return a;
 }
 
-Matrix MLP::mse(Matrix target) {
+Matrix MLP::squared_error(Matrix target) {
 	assert_dim_equal(m_layers.back().a_out, target);
 
+	Matrix error = Matrix::sub(m_layers.back().a_out, target);
+	Matrix squared_error = Matrix::mul(error, error);
+
 	Matrix coef(target.rows, target.cols, 0.5f);
-	return Matrix::haamard_product(coef, (Matrix::sub(m_layers.back().a_out, target)));
+	return Matrix::haamard_product(coef, squared_error);
 }
 
 void MLP::backward(Matrix target) {

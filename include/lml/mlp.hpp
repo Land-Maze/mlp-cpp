@@ -21,7 +21,7 @@ class MLP {
 	void backward(Matrix target);
 	void update();
 
-	Matrix mse(Matrix target);
+	Matrix squared_error(Matrix target);
 
   private:
 	MLPCreateInfo m_metadata;
