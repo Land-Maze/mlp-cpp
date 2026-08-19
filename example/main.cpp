@@ -37,7 +37,7 @@ int main() {
 		for (auto &entry : dataset) {
 			xor_mlp.forward(entry.first);
 			xor_mlp.backward(entry.second);
-			xor_mlp.update();
+			// xor_mlp.update();
 			epoch_error = xor_mlp.squared_error(entry.second)(0, 0);
 		}
 
@@ -49,6 +49,7 @@ int main() {
 
 	for (auto &entry : dataset) {
 		auto result = xor_mlp.forward(entry.first);
-		printf("Input {%f, %f}, Output %f\n", entry.first(0, 0), entry.first(1, 0), result(0, 0));
+		printf("Input {%f, %f}, Output %f\n", entry.first(0, 0),
+		       entry.first(1, 0), result(0, 0));
 	}
 }

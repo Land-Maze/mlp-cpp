@@ -19,12 +19,11 @@ class MLP {
 
 	Matrix forward(Matrix input);
 	void backward(Matrix target);
-	void update();
 
 	Matrix squared_error(Matrix target);
 
   private:
 	MLPCreateInfo m_metadata;
-	std::vector<DenseLayer> m_layers;
+	std::vector<std::unique_ptr<Layer>> m_layers;
 };
 } // namespace LML

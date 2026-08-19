@@ -4,8 +4,9 @@
 using namespace LML;
 
 DenseLayer::DenseLayer(size_t n_in, size_t n_out, ActivationType method)
-	: z(n_out, 1), W(n_out, n_in), b(n_out, 1), act(method), a_in(n_in, 1), a_out(n_out, 1), gradient(n_out, n_in),
-	  delta(n_out, 1), dX(n_in, 1), dZ(n_out, 1) {
+	: Layer(Matrix(n_out, n_in), Matrix(n_out, n_in), Matrix(n_out, 1)),
+	  z(n_out, 1), b(n_out, 1), act(method), a_in(n_in, 1), delta(n_out, 1),
+	  dX(n_in, 1), dZ(n_out, 1) {
 	Initializer::glorot_uniform(this->W, n_in, n_out);
 	Initializer::fill_zeros(this->b);
 }
